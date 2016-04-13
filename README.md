@@ -96,11 +96,12 @@ open class ServiceModule {
  
 ## Testing
 
-* All our dependencies our injected through our `Application`, so if we want to mock them out. We can do this easily by creating a test application, override the `Modules` and the dependencies we want in our test will be injected instead.
-*  If you want Robolectric to run a different `Application` than defined in your manifest, it will do it automatically for you when you add `Test` as a prefix to your `Application` name. (`TestExampleApp`)
+ <img src="/DI-testing.png" alt="Dependency injection testing">
 
-* Let's say we want to Mock out our GithubAPI that we used as an example above.
+* As you can see we're going to replace our `Module`, so that instead of the production dependency it provides a mocked dependency. All our dependencies are injected through our `Application`. So we create a test application, override the `createComponent() : ApplicationComponent` function and specify our `TestModule` instead of our `ServiceModule`.
+     *  If you want Robolectric to run a different `Application` than defined in your manifest, it will do it automatically for you when you add `Test` as a prefix to your `Application` name. (`TestExampleApp`)
 
+* So let's do this for our GithubAPI
 * First we'll create a `MockGithubAPI`:
 ```
 class MockGithubAPI() : GithubAPI {
