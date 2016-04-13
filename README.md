@@ -7,7 +7,7 @@ https://github.com/robolectric/robolectric/wiki/Running-tests-in-Android-Studio
 
 ## Dagger 2 (Dependency Injection)
 
-* **Dependency**: If A is depedent on B, that means A cannot function without B. So dependency injection means that when A is depedent on B, we will inject B into A so that A can function correctly.
+* **Dependency**: If A is dependent on B, that means A cannot function without B. So dependency injection means that when A is dependent on B, we will inject B into A so that A can function correctly.
 
 * So Dependency injection is the pattern of the injection of a dependency to a dependent object (a client) that needs it.
 
