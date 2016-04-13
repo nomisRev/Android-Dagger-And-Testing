@@ -1,6 +1,7 @@
 package be.vergauwen.simon.androidtestingexample.core.di
 
 import be.vergauwen.simon.androidtestingexample.core.service.GithubAPI
+import be.vergauwen.simon.androidtestingexample.core.service.MockGithubAPI
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -8,13 +9,11 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-open class ServiceModule {
-
-  val URI = "https://api.github.com"
+class TestServiceModule : ServiceModule() {
 
   @ApplicationScope
   @Provides
-  open fun provideRestAdapter(): Retrofit {
+  override fun provideRestAdapter(): Retrofit {
     return Retrofit.Builder().baseUrl(URI).addConverterFactory(
         GsonConverterFactory.create()).addCallAdapterFactory(
         RxJavaCallAdapterFactory.create()).build()
@@ -22,7 +21,7 @@ open class ServiceModule {
 
   @ApplicationScope
   @Provides
-  open fun provideGithubAPI(retrofit: Retrofit): GithubAPI {
-    return retrofit.create(GithubAPI::class.java)
+  override  fun provideGithubAPI(retrofit: Retrofit): GithubAPI {
+    return MockGithubAPI()
   }
 }

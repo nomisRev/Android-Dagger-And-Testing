@@ -2,23 +2,23 @@ package be.vergauwen.simon.androidtestingexample.core.di
 
 import android.app.Application
 import android.content.Context
-import be.vergauwen.simon.androidtestingexample.core.rx.RxUtil
+import be.vergauwen.simon.androidtestingexample.core.rx.MockRxUtil
 import be.vergauwen.simon.androidtestingexample.core.rx.Transformers
 import dagger.Module
 import dagger.Provides
 
 @Module
-open class ApplicationModule(private val application: Application) {
+class TestApplicationModule(private val application: Application) : ApplicationModule(application) {
 
   @ApplicationScope
   @Provides
-  open fun provideApplicationContext(): Context {
+  override fun provideApplicationContext(): Context {
     return application
   }
 
   @ApplicationScope
   @Provides
-  open fun provideTransformers(): Transformers {
-    return RxUtil()
+  override fun provideTransformers(): Transformers {
+    return MockRxUtil()
   }
 }

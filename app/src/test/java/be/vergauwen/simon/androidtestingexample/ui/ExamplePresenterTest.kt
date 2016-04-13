@@ -1,6 +1,5 @@
 package be.vergauwen.simon.androidtestingexample.ui
 
-import be.vergauwen.simon.androidtestingexample.core.model.GitHubRepo
 import be.vergauwen.simon.androidtestingexample.core.rx.MockRxUtil
 import be.vergauwen.simon.androidtestingexample.core.service.MockGithubAPI
 import org.junit.Assert.*
@@ -11,12 +10,11 @@ class ExamplePresenterTest {
 
   lateinit var presenter: ExamplePresenter
   lateinit var view: MockExampleView
-  val githubRepo = listOf(GitHubRepo("test", "www.test.com", "test_desc"))
   lateinit var githubAPI : MockGithubAPI
 
   @Before
   fun setUp() {
-    githubAPI = MockGithubAPI(githubRepo)
+    githubAPI = MockGithubAPI()
     presenter = ExamplePresenter(githubAPI, MockRxUtil())
     view = MockExampleView()
   }

@@ -2,11 +2,11 @@
 //
 //import android.app.Application
 //import be.vergauwen.simon.androidtestingexample.core.di.ApplicationComponent
-//import be.vergauwen.simon.androidtestingexample.core.di.ApplicationModule
 //import be.vergauwen.simon.androidtestingexample.core.di.DaggerApplicationComponent
-//import be.vergauwen.simon.androidtestingexample.core.di.ServiceModule
+//import be.vergauwen.simon.androidtestingexample.core.di.TestApplicationModule
+//import be.vergauwen.simon.androidtestingexample.core.di.TestServiceModule
 //
-//class ExampleAppImpl : Application(){
+//class TestExampleAppImpl : Application() {
 //  companion object {
 //    lateinit var component: ApplicationComponent
 //  }
@@ -14,9 +14,7 @@
 //  override fun onCreate() {
 //    super.onCreate()
 //
-//    component = DaggerApplicationComponent.builder()
-//        .serviceModule(ServiceModule())
-//        .applicationModule(ApplicationModule(this))
-//        .build()
+//    component = DaggerApplicationComponent.builder().applicationModule(
+//        TestApplicationModule(this)).serviceModule(TestServiceModule()).build()
 //  }
 //}
