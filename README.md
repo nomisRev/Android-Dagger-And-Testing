@@ -2,6 +2,9 @@
 * Testing with MVP , Dagger 2 and Retrofit 2
 * Required knowledge: MVP  and Retrofit 2.
 
+**I noticed that some people on mac have problems running the tests, if so follow these notes to fix the problem.**
+https://github.com/robolectric/robolectric/wiki/Running-tests-in-Android-Studio
+
 ## Dagger 2 (Dependency Injection)
 
 * **Dependency**: If A is depedent on B, that means A cannot function without B. So dependency injection means that when A is depedent on B, we will inject B into A so that A can function correctly.
