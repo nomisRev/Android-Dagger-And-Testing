@@ -14,10 +14,10 @@
   * Constructor injection
   ```
   class Example{
-  Dependency dependency
-    Example(Dependency dependency){
-      this.dependency = dependency;
-    }
+     Dependency dependency
+     Example(Dependency dependency){
+       this.dependency = dependency;
+     }
     
     // ...
   }
@@ -25,18 +25,18 @@
   * Setter/method injection
   ```
   class Example{
-  Dependency dependency
-    void setDependency(Dependency dependency){
-      this.dependency = dependency;
-    }
+     Dependency dependency
+     void setDependency(Dependency dependency){
+       this.dependency = dependency;
+     }
     
     // ...
   }
   ```
   * Property/field injection
-    ```
+  ```
   class Example{
-  Dependency dependency
+      Dependency dependency
   }
   
   example.dependency = dependency;
