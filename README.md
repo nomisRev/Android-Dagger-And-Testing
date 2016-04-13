@@ -144,3 +144,8 @@ class TestExampleApp : ExampleApp() {
 }
 ```
 
+* You can use the same technique for other dependencies. In the source code of this example, you'll find a core.rx.RxUtil class that is used to inject `Transfomer` into the `Presenter`. You can mock these out to apply `Schedulers.immediate()` to keep the `AndroidSchedulers.mainThread()` out of your presenter unit test.
+
+ <img src="/Test-coverage.png" alt="Test coverage">
+
+* At the end of the day, this is what we like to see. So now you can go home and enjoy a drink.
