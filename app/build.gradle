@@ -18,10 +18,27 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+        }
+    }
+    productFlavors {
+        demo {
+            applicationId "be.vergauwen.simon.androidtestingexample.demo"
+            versionName "1.0-demo"
+        }
+        full {
+            applicationId "be.vergauwen.simon.androidtestingexample.full"
+            versionName "1.0-full"
+        }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+        testFull.java.srcDirs += 'src/testFull/kotlin'
+        testDemo.java.srcDirs += 'src/testDemo/kotlin'
+        demo.java.srcDirs += 'src/demo/kotlin'
+        full.java.srcDirs += 'src/demo/kotlin'
     }
 }
 
@@ -33,7 +50,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':himura-kt')
 
-    testCompile('junit:junit:4.12', "org.robolectric:robolectric:3.0",
+    testCompile('junit:junit:4.12',"org.robolectric:robolectric:3.1-SNAPSHOT",
         "org.jetbrains.kotlin:kotlin-test:$kotlin_version")
 
     compile 'com.android.support:appcompat-v7:23.3.0'
