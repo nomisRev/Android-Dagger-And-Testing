@@ -1,4 +1,5 @@
-# Android Testing Example
+# Android Dagger and testing example
+
 * Testing with MVP , Dagger 2 and Retrofit 2
 * Required knowledge: MVP  and Retrofit 2.
 
@@ -11,42 +12,75 @@ https://github.com/robolectric/robolectric/wiki/Running-tests-in-Android-Studio
 
 * So Dependency injection is the pattern of the injection of a dependency to a dependent object (a client) that needs it.
 
-* Before you start using dagger, it's important you understand the concepts of dependency injection. Since this is the pattern that allows us to do this kind of testing I find it essential to this example.
+* Before you start using dagger, it's important you understand the concepts of dependency injection.
+* Now how exactly does this work. And what does it look like in Android.
+ <img src="/DI-pattern.png" alt="Dependency pattern">
+
+* The Application has a Component aka container, the component knows the dependencies and knows where to get them (from modules). So when a dependency must be injected, the component gets the dependencies from the module.
+* This is where the beauty of dependency injection happens! Let's say a class Example needs a DB, we can aggregate the actual implementation behind an interface. Our class Example is not interessted in how our DB works anyway, it only wants to query some data.
+```
+interface DB {
+    Data querySomeData(int id);
+}
+```
+```
+class SQLite implements DB {
+    @Override
+    Data querySomeData(int id){
+        //SQLite implementation
+    }
+}
+```
+* So let's say we were using SQLite but we want to use a different system like Realm, as shown below we can simply create a Realm implementation that exposes the same functionality trough our DB interface and have our module provide the Realm implementation instead of our SQLite implementation. And no changes in code have to be made anywhere else!!!
+```
+class RealmImpl implements DB {
+    @Override
+    Data querySomeData(int id){
+        //Realm implementation
+    }
+}
+```
+```
+class DBModule{
+     @ApplicationScope
+     @Provides
+      DB provideDB(){
+       return RealmImpl();
+     }
+}
+```
 
 * There are 3 types of injection:
   * Constructor injection
-  ```
-  class Example{
-     Dependency dependency
-     Example(Dependency dependency){
-       this.dependency = dependency;
-     }
+ ```
+ class Example{
+    DB dependency
+    Example(DB dependency){
+      this.dependency = dependency;
+    }
     
     // ...
-  }
-  ```
+ }
+   ```
   * Setter/method injection
-  ```
-  class Example{
-     Dependency dependency
-     void setDependency(Dependency dependency){
-       this.dependency = dependency;
-     }
+ ```
+ class Example{
+    DB dependency
+    void setDB(DB dependency){
+      this.dependency = dependency;
+    }
     
     // ...
-  }
-  ```
+ }
+ ```
   * Property/field injection
-  ```
-  class Example{
-      Dependency dependency
-  }
+ ```
+ class Example{
+     DB dependency
+ }
   
-  example.dependency = dependency;
-  ```
- * Now how exactly does this work. And what does it look like in Android.
- 
- <img src="/DI-pattern.png" alt="Dependency pattern">
+ example.dependency = dependency;
+ ```
 
 * Simply, the `Application` has a property `Component`. This component (interface) exposes dependencies, for example `GithubAPI`. The Component relies on `Modules` in order to **provide** these dependencies. In our example we have a `ServiceModule` which creates and provides a GithubAPI to our dependent classes.
 
@@ -101,7 +135,7 @@ open class ServiceModule {
 
  <img src="/DI-testing.png" alt="Dependency injection testing">
 
-* As you can see we're going to replace our `Module`, so that instead of the production dependency it provides a mocked dependency. All our dependencies are injected through our `Application`. So we create a test application, override the `createComponent() : ApplicationComponent` function and specify our `TestModule` instead of our `ServiceModule`.
+* As explained above we can replace our `Module`, so that instead of the production dependency it provides a mocked dependency. All our dependencies are injected through our `Application`. So we create a test application, override the `createComponent() : ApplicationComponent` function and specify our `TestModule` instead of our `ServiceModule`.
      *  If you want Robolectric to run a different `Application` than defined in your manifest, it will do it automatically for you when you add `Test` as a prefix to your `Application` name. (`TestExampleApp`)
 
 * So let's do this for our GithubAPI
