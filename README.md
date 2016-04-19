@@ -42,7 +42,7 @@ class DBModule{
      @ApplicationScope
      @Provides
       DB provideDB(){
-       return RealmImpl();
+       return new RealmImpl();
      }
 }
 ```
