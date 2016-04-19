@@ -9,13 +9,10 @@ https://github.com/robolectric/robolectric/wiki/Running-tests-in-Android-Studio
 ## Dagger 2 (Dependency Injection)
 
 * **Dependency**: If A is dependent on B, that means A cannot function without B. So dependency injection means that when A is dependent on B, we will inject B into A so that A can function correctly.
-
 * So Dependency injection is the pattern of the injection of a dependency to a dependent object (a client) that needs it.
-
 * Before you start using dagger, it's important you understand the concepts of dependency injection.
 * Now how exactly does this work. And what does it look like in Android.
  <img src="/DI-pattern.png" alt="Dependency pattern">
-
 * The Application has a Component aka container, the component knows the dependencies and knows where to get them (from modules). So when a dependency must be injected, the component gets the dependencies from the module.
 * This is where the beauty of dependency injection happens! Let's say a class Example needs a DB, we can aggregate the actual implementation behind an interface. Our class Example is not interessted in how our DB works anyway, it only wants to query some data.
 ```
