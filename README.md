@@ -14,7 +14,7 @@ https://github.com/robolectric/robolectric/wiki/Running-tests-in-Android-Studio
 * Now how exactly does this work. And what does it look like in Android.
  <img src="/DI-pattern.png" alt="Dependency pattern">
 * The Application has a Component aka container, the component knows the dependencies and knows where to get them (from modules). So when a dependency must be injected, the component gets the dependencies from the module.
-* This is where the beauty of dependency injection happens! Let's say a class Example needs a DB, we can aggregate the actual implementation behind an interface. Our class Example is not interessted in how our DB works anyway, it only wants to query some data.
+* This is where the beauty of dependency injection happens! Let's say a class Example needs a DB, we can aggregate the actual implementation behind an interface. Our class Example is not interested in how our DB works anyway, it only wants to query some data.
 ```
 interface DB {
     Data querySomeData(int id);
