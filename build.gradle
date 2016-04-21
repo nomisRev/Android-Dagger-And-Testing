@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = '1.0.1-2'
 
     repositories {
-        jcenter()
+        maven { url "https://jcenter.bintray.com" }
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
@@ -19,7 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        maven { url "https://jcenter.bintray.com" }
         mavenCentral()
         maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
     }
