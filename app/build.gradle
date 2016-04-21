@@ -43,6 +43,9 @@ android {
             versionName "1.0-full"
         }
     }
+    lintOptions {
+        abortOnError false
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'

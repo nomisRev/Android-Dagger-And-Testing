@@ -28,22 +28,22 @@ task pmd(type: Pmd) {
     ignoreFailures = true
 
     ruleSets = [
-        "basic",
-        "braces",
+        "java-basic",
+        "java-braces",
         // "naming",
-        "android",
+        "java-android",
         //   "codesize",
         //   "controversial",
-        "design",
+        "java-design",
         //   "finalizers",
         //   "imports",
         //   "javabeans",
-        "junit",
+        "java-junit",
         //   "migrating",
         //   "optimizations",
         //   "strictexception",
-        "strings",
-        "unusedcode"
+        "java-strings",
+        "java-unusedcode"
     ]
 
     source 'src'
