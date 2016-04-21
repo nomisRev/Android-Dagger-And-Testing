@@ -3,6 +3,7 @@ package be.vergauwen.simon.androidtestingexample.ui
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import be.vergauwen.simon.androidtestingexample.BuildConfig
 import be.vergauwen.simon.androidtestingexample.ExampleApp
 import be.vergauwen.simon.androidtestingexample.R
 import be.vergauwen.simon.himurakotlin.MVPDaggerActivity
@@ -28,5 +29,9 @@ class ExampleActivity : MVPDaggerActivity<ExampleContract.View, ExamplePresenter
   override fun showError() {
     Log.e("ExampleActivity", "showError(")
     githubRepo.text = "error"
+  }
+
+  fun isMockBuild() : Boolean {
+    return BuildConfig.MOCK
   }
 }

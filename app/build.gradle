@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: rootProject.file('gradle/check.gradle')
 
 android {
     compileSdkVersion 23
@@ -17,9 +18,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "MOCK", "false"
+            buildConfigField "String", "URI",  "\"https://api.github.com\""
         }
         debug {
             debuggable true
+            applicationIdSuffix ".debug"
+            buildConfigField "boolean", "MOCK", "false"
+            buildConfigField "String", "URI",  "\"https://api.github.com\""
+        }
+        mock {
+            applicationIdSuffix ".mock"
+            buildConfigField "boolean", "MOCK", "true"
+            buildConfigField "String", "URI",  "\"https://api.github.com\""
         }
     }
     productFlavors {
@@ -37,6 +48,7 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
         testFull.java.srcDirs += 'src/testFull/kotlin'
         testDemo.java.srcDirs += 'src/testDemo/kotlin'
+        testDemoMock.java.srcDirs += 'src/testDemoMock/kotlin'
         demo.java.srcDirs += 'src/demo/kotlin'
         full.java.srcDirs += 'src/demo/kotlin'
     }

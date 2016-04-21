@@ -1,0 +1,57 @@
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+
+check.dependsOn 'pmd', 'checkstyle'
+
+def rootProjectDir = rootProject.projectDir
+println 'root project dir = ' + rootProjectDir
+logger.error('root project dir = ' + rootProjectDir)
+
+task checkstyle(type: Checkstyle) {
+
+    println 'root project dir = ' + rootProjectDir
+    logger.error('root project dir = ' + rootProjectDir)
+
+    ignoreFailures = true
+    //configFile file("config/checkstyle/checkstyle.xml")
+    //configFile = new File("${project.projectDir}/../gradle/config/checkstyle/checkstyle.xml")
+    configFile = new File("${rootProjectDir}/gradle/config/checkstyle/checkstyle.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**', '**/test/**'
+
+    classpath = files()
+}
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+
+    ruleSets = [
+        "basic",
+        "braces",
+        // "naming",
+        "android",
+        //   "codesize",
+        //   "controversial",
+        "design",
+        //   "finalizers",
+        //   "imports",
+        //   "javabeans",
+        "junit",
+        //   "migrating",
+        //   "optimizations",
+        //   "strictexception",
+        "strings",
+        "unusedcode"
+    ]
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}

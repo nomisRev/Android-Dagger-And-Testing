@@ -1,5 +1,6 @@
 package be.vergauwen.simon.androidtestingexample.core.di
 
+import be.vergauwen.simon.androidtestingexample.BuildConfig
 import be.vergauwen.simon.androidtestingexample.core.service.GithubAPI
 import dagger.Module
 import dagger.Provides
@@ -10,11 +11,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 open class ServiceModule {
 
-  val URI = "https://api.github.com"
+//  val URI = "https://api.github.com"
+  val URI = BuildConfig.URI
 
   @ApplicationScope
   @Provides
   open fun provideRestAdapter(): Retrofit {
+
+
     return Retrofit.Builder().baseUrl(URI).addConverterFactory(
         GsonConverterFactory.create()).addCallAdapterFactory(
         RxJavaCallAdapterFactory.create()).build()
