@@ -20,6 +20,11 @@ task checkstyle(type: Checkstyle) {
     source 'src'
     include '**/*.java'
     exclude '**/gen/**', '**/test/**'
+    
+    reports {
+        xml.enabled = true
+        html.enabled = false //only need xml for jenkins
+    }
 
     classpath = files()
 }
@@ -51,7 +56,7 @@ task pmd(type: Pmd) {
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = false
-        html.enabled = true
+        xml.enabled = true
+        html.enabled = false //only need xml for jenkins
     }
 }
