@@ -1,0 +1,32 @@
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
+def coverageSourceDirs = [
+    '../app/src/main/java',
+    '../app/src/main/kotlin',
+    '../app/build/generated/source/buildConfig/debug',
+    '../app/build/generated/source/r/debug'
+]
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = false //only need xml for jenkins
+    }
+
+    // The usage of the R, BuildConfig, etc classes does not need to be covered... thus ignored from the report
+    classDirectories = fileTree(
+        dir: '../appfoundry-app/build/intermediates/classes/debug',
+        exclude: [
+            '**/R*.class',
+            '**/BuildConfig*',
+            '**/*$*.class',
+            '**/*$*.java']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+
+    executionData = files('build/jacoco/test.exec')
+    //additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+}

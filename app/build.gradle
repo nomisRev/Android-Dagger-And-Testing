@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "jacoco"
+
+//script plugins
 apply from: rootProject.file('gradle/check.gradle')
 
 android {
@@ -17,18 +20,24 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
             buildConfigField "boolean", "MOCK", "false"
             buildConfigField "String", "URI",  "\"https://api.github.com\""
         }
         debug {
             debuggable true
+            testCoverageEnabled true
             applicationIdSuffix ".debug"
+
             buildConfigField "boolean", "MOCK", "false"
             buildConfigField "String", "URI",  "\"https://api.github.com\""
         }
         mock {
+            testCoverageEnabled true
             applicationIdSuffix ".mock"
+
             buildConfigField "boolean", "MOCK", "true"
             buildConfigField "String", "URI",  "\"https://api.github.com\""
         }
