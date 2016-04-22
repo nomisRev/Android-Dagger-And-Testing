@@ -17,7 +17,7 @@ jacocoTestReport {
 
     // The usage of the R, BuildConfig, etc classes does not need to be covered... thus ignored from the report
     classDirectories = fileTree(
-        dir: '../appfoundry-app/build/intermediates/classes/debug',
+        dir: '../app/build/intermediates/classes/debug',
         exclude: [
             '**/R*.class',
             '**/BuildConfig*',
