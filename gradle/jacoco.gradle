@@ -40,16 +40,17 @@ project.afterEvaluate {
                                '**/*Module.*', // Modules for Dagger.
                                '**/*Dagger*.*', // Dagger auto-generated code.
                                '**/*MembersInjector*.*', // Dagger auto-generated code.
-                               '**/*_Provide*Factory*.*']
+                               '**/*_Provide*Factory*.*',
+                               '**/*$*$*']
                 )
 
                 def coverageSourceDirs = [
                     "src/main/java",
                     "src/$productFlavorName/java",
                     "src/$buildTypeName/java",
-                    "src/main/kotlin",
-                    "src/$productFlavorName/kotlin",
-                    "src/$buildTypeName/kotlin"
+//                    "src/main/kotlin",
+//                    "src/$productFlavorName/kotlin",
+//                    "src/$buildTypeName/kotlin"
 
                 ]
                 additionalSourceDirs = files(coverageSourceDirs)
