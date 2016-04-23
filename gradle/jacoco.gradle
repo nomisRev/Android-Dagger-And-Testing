@@ -50,6 +50,7 @@ project.afterEvaluate {
                     "src/main/java",
                     "src/$productFlavorName/java",
                     "src/$buildTypeName/java",
+// We don't need this because we added kotlin to java sourceDirs in app/build,gradle
 //                    "src/main/kotlin",
 //                    "src/$productFlavorName/kotlin",
 //                    "src/$buildTypeName/kotlin"
