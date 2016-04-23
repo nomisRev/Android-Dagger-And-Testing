@@ -1,32 +1,118 @@
 jacoco {
-    toolVersion = "0.7.6.201602180812"
+    toolVersion = "0.7.2.201409121644"
 }
 
-def coverageSourceDirs = [
-    '../app/src/main/java',
-    '../app/src/main/kotlin',
-    '../app/build/generated/source/buildConfig/debug',
-    '../app/build/generated/source/r/debug'
-]
+//def coverageSourceDirs = [
+//    '../app/src/main/java',
+//    '../app/src/main/kotlin',
+//    '../app/build/generated/source/buildConfig/debug',
+//    '../app/build/generated/source/r/debug'
+//]
 
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = false //only need xml for jenkins
+//def coverageSourceDirs = [
+//    'src/main/java',
+//    "src/$productFlavorName/java",
+//    "src/$buildTypeName/java",
+//    'src/main/kotlin',
+//    "src/$productFlavorName/kotlin",
+//    "src/$buildTypeName/kotlin",
+//]
+
+
+project.afterEvaluate {
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+
+    // When no product flavors defined, use empty
+    if (!productFlavors) productFlavors.add('')
+
+    productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+            def sourceName, sourcePath
+            if (!productFlavorName) {
+                sourceName = sourcePath = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+                sourcePath = "${productFlavorName}/${buildTypeName}"
+            }
+            def testTaskName = "test${sourceName.capitalize()}UnitTest"
+            def coverageTaskName = "${testTaskName}Coverage"
+
+            // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "${coverageTaskName}"(type: JacocoReport, dependsOn: "$testTaskName") {
+                group = 'Reporting'
+                description = "Generate Jacoco coverage reports for the ${sourceName.capitalize()} build."
+
+                classDirectories = fileTree(
+                    dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+                    excludes: ['**/R.class',
+                               '**/R$*.class',
+                               '**/*$ViewInjector*.*',
+                               '**/*$ViewBinder*.*',
+                               '**/BuildConfig.*',
+                               '**/Manifest*.*',
+                               '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+                               '**/*Module.*', // Modules for Dagger.
+                               '**/*Dagger*.*', // Dagger auto-generated code.
+                               '**/*MembersInjector*.*', // Dagger auto-generated code.
+                               '**/*_Provide*Factory*.*'] // Dagger auto-generated code.
+                )
+
+                def coverageSourceDirs = [
+                    'src/main/java',
+                    "src/$productFlavorName/java",
+                    "src/$buildTypeName/java"
+                ]
+                additionalSourceDirs = files(coverageSourceDirs)
+                sourceDirectories = files(coverageSourceDirs)
+                executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
+
+                reports {
+                    xml.enabled = true
+                    html.enabled = true
+                }
+            }
+
+            build.dependsOn "${coverageTaskName}"
+        }
     }
-
-    // The usage of the R, BuildConfig, etc classes does not need to be covered... thus ignored from the report
-    classDirectories = fileTree(
-        dir: '../app/build/intermediates/classes/debug',
-        exclude: [
-            '**/R*.class',
-            '**/BuildConfig*',
-            '**/*$*.class',
-            '**/*$*.java']
-    )
-
-    additionalSourceDirs = files(coverageSourceDirs)
-
-    executionData = files('build/jacoco/test.exec')
-    //additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
 }
+
+
+
+
+
+//def buildTypes = android.buildTypes.collect { type -> type.name }
+//def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+//
+//// When no product flavors defined, use empty
+//if (!productFlavors) productFlavors.add('')
+//
+//jacocoTestReport {
+//    reports {
+//        xml.enabled = true
+//        html.enabled = false //only need xml for jenkins
+//    }
+//
+//    // The usage of the R, BuildConfig, etc classes does not need to be covered... thus ignored from the report
+//    classDirectories = fileTree(
+//        dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+//        excludes: ['**/R.class',
+//                   '**/R$*.class',
+//                   '**/*$ViewInjector*.*',
+//                   '**/*$ViewBinder*.*',
+//                   '**/BuildConfig.*',
+//                   '**/Manifest*.*',
+//                   '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+//                   '**/*Module.*', // Modules for Dagger.
+//                   '**/*Dagger*.*', // Dagger auto-generated code.
+//                   '**/*MembersInjector*.*', // Dagger auto-generated code.
+//                   '**/*_Provide*Factory*.*'] // Dagger auto-generated code.
+//    )
+//
+//    additionalSourceDirs = files(coverageSourceDirs)
+//
+//    executionData = files('build/jacoco/test.exec')
+//    //additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+//}
