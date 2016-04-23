@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: "jacoco"
 
 //script plugins
 apply from: rootProject.file('gradle/check.gradle')
+apply from: rootProject.file('gradle/jacoco.gradle')
 
 android {
     compileSdkVersion 23
