@@ -19,6 +19,7 @@ task checkstyle(type: Checkstyle) {
 
     source 'src'
     include '**/*.java'
+    include '**/*.kt'
     exclude '**/gen/**', '**/test/**'
 
     reports {
@@ -53,6 +54,7 @@ task pmd(type: Pmd) {
 
     source 'src'
     include '**/*.java'
+    include '**/*.kt'
     exclude '**/gen/**'
 
     reports {
