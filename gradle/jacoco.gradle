@@ -1,25 +1,25 @@
 apply plugin: 'jacoco'
 
-//jacoco {
-//    toolVersion = "0.7.2.201409121644"
-//}
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+}
 
 //requires gradle 2.13, not stable yet. Robolectric should be fixed!!
-jacoco {
-    toolVersion = "0.7.6.201602180812"
-}
-android {
-    testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
-    }
-}
+//jacoco {
+//    toolVersion = "0.7.6.201602180812"
+//}
+//android {
+//    testOptions {
+//        unitTests.all {
+//            jacoco {
+//                includeNoLocationClasses = true
+//            }
+//        }
+//    }
+//}
 
 project.afterEvaluate {
-    // Grab all build types and product flavors
+    // Get all build types and product flavors
     def buildTypes = android.buildTypes.collect { type -> type.name }
     def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
 
@@ -43,6 +43,7 @@ project.afterEvaluate {
             def testTaskName = "test${sourceName.capitalize()}UnitTest"
 
             // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            //noinspection GroovyAssignabilityCheck
             task "${testTaskName}Coverage"(type: JacocoReport, dependsOn: "$testTaskName") {
                 group = "Reporting"
                 description =
@@ -67,19 +68,12 @@ project.afterEvaluate {
                         ])
 
                 //Source code directories
-                def coverageSourceDirs = ["src/main/java",
+                sourceDirectories = files(["src/main/java",
                                           "src/$productFlavorName/java",
-                                          "src/$buildTypeName/java",
-                                          // We don't need this because we added kotlin to java sourceDirs in app/build,gradle
-                                          //                    "src/main/kotlin",
-                                          //                    "src/$productFlavorName/kotlin",
-                                          //                    "src/$buildTypeName/kotlin"
+                                          "src/$buildTypeName/java"
+                ])
 
-                ]
-
-                //Assign the paramaters to jacoco
-                additionalSourceDirs = files(coverageSourceDirs)
-                sourceDirectories = files(coverageSourceDirs)
+                //Location of our exec files
                 executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
 
                 //reports jacoco should output
