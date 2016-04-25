@@ -1,22 +1,22 @@
 apply plugin: 'jacoco'
 
-jacoco {
-    toolVersion = "0.7.2.201409121644"
-}
-
-//requires gradle 2.13, not stable yet. Robolectric should be fixed!!
 //jacoco {
-//    toolVersion = "0.7.6.201602180812"
+//    toolVersion = "0.7.2.201409121644"
 //}
-//android {
-//    testOptions {
-//        unitTests.all {
-//            jacoco {
-//                includeNoLocationClasses = true
-//            }
-//        }
-//    }
-//}
+
+//requires gradle 2.13, just became stable!! Robolectric should be fixed!!
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
 
 project.afterEvaluate {
     // Get all build types and product flavors
