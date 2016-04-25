@@ -3,7 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 //script plugins
-apply from: rootProject.file('gradle/check.gradle')
+apply from: rootProject.file('gradle/checkstyle.gradle')
+apply from: rootProject.file('gradle/pmd.gradle')
+apply from: rootProject.file('gradle/findbugs.gradle')
 apply from: rootProject.file('gradle/jacoco.gradle')
 
 android {
