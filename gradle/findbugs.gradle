@@ -21,8 +21,8 @@ task findbugs(type: FindBugs) {
     excludeFilter = file("${rootProject.projectDir}/gradle/config/findbugs/exclude.xml")
 
     reports {
-        xml.enabled = false
-        html.enabled = true
+        xml.enabled = true
+        html.enabled = false
         xml.destination = "$project.buildDir/reports/findbugs/findbugs-output.xml"
         html.destination = "$project.buildDir/reports/findbugs/findbugs-output.html"
     }
